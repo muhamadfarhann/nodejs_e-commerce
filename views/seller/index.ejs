@@ -1,0 +1,36 @@
+<a href="/barang/create">Tambah Barang Baru</a>
+<br>
+<a href="/seller/create">Tambah Seller Baru</a>
+<% 
+    let no = 1; 
+%>
+
+<table border="1" cellpadding="10" style="border-collapse: collapse;">
+    
+    <tr>
+        <th>No</th>
+        <th>Nama Seller</th>
+        <th>Nama Toko</th>
+        <th>No Telepon</th>
+        <th>Email</th>
+        <th>Alamat</th>
+        <th>Aksi</th>
+    </tr>
+
+    <% if(data) { %>
+        <% data.forEach((slr) => { %>
+            <tr>
+                <td><%= no++ %></td>
+                <td><%= slr.nama_seller %></td>
+                <td><%= slr.nama_toko %></td>
+                <td><%= slr.no_telp %></td>
+                <td><%= slr.email %></td>
+                <td><%= slr.alamat %></td>
+                <td>
+                    <a href="/seller/<%= slr.id %>/update">Update</a>
+                    <a href="/seller/<%= slr.id %>/delete">Delete</a>
+                </td>
+            </tr>
+        <% }) %>
+    <% } %>
+</table>

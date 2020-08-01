@@ -1,0 +1,49 @@
+<a href="/barang/create">Tambah Barang Baru</a>
+<br>
+<a href="/seller/create">Tambah Seller Baru</a>
+
+<% 
+    let no = 1; 
+%>
+<h2> Pencarian </h2>
+
+<form action="/barang/search" method="POST">
+    <input type="text" name="cari" id="" placeholder="Cari Nama Barang">
+    <button type="submit">Cari</button>
+</form>
+
+<%if (count) { %>
+   <%= count %> Ditemukan
+<% } %>
+
+<table border="1" cellpadding="10" style="border-collapse: collapse;">
+    
+    <tr>
+        <th>No</th>
+        <th>Kode Barang</th>
+        <th>Seller</th>
+        <th>Nama Barang</th>
+        <th>Harga</th>
+        <th>Stok</th>
+        <th>Deskripsi Produk</th>
+        <th>Aksi</th>
+    </tr>
+
+    <% if(data) { %>
+        <% data.forEach((brg) => { %>
+            <tr>
+                <td><%= no++ %></td>
+                <td><%= brg.kode_barang %></td>
+                <td><%= brg.seller_id %></td>
+                <td><%= brg.nama_barang %></td>
+                <td><%= brg.harga %></td>
+                <td><%= brg.stok %></td>
+                <td><%= brg.deskripsi %></td>
+                <td>
+                    <a href="/barang/<%= brg.id %>/update">Update</a>
+                    <a href="/barang/<%= brg.id %>/delete">Delete</a>
+                </td>
+            </tr>
+        <% }) %>
+    <% } %>
+</table>
