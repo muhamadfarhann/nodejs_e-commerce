@@ -125,7 +125,7 @@ module.exports.updateSeller = (req, res) => {
         })
 }
 
-module.exports.findByid = (req, res) => {
+module.exports.getSellerById = (req, res) => {
     Seller.findOne({
             where: {
                 id: req.params.id
@@ -145,4 +145,26 @@ module.exports.findByid = (req, res) => {
                 "pesan": error.toString()
             });
         })
+}
+
+module.exports.getSellerByName = (req, res) => {
+  Seller.findOne({
+          where: {
+              nama_seller: req.params.name
+          }
+      })
+      .then((seller) => {
+          res.json({
+              "status": 200,
+              "data": seller,
+              "pesan": "Berhasil"
+          });
+      })
+      .catch((error) => {
+          res.json({
+              "status": 500,
+              "data": {},
+              "pesan": error.toString()
+          });
+      })
 }

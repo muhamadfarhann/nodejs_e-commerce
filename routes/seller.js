@@ -126,7 +126,8 @@ router.get('/index', (req, res) => {
 
 //update tanggal 5 agustus
 router.get('/api/v1/seller', sellerControler.getSeller);
-router.get('/api/v1/seller/id/:id', sellerControler.findByid);
+router.get('/api/v1/seller/id/:id', sellerControler.getSellerById);
+router.get('/api/v1/seller/name/:name', sellerControler.getSellerByName);
 router.delete('/api/v1/seller/id/:id', sellerControler.deleteSeller);
 router.post('/api/v1/seller', sellerControler.createSeller)
 router.patch('/api/v1/seller', sellerControler.updateSeller)
