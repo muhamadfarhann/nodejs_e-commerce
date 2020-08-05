@@ -11,6 +11,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const Barang = require('./models/barang');
 const Seller = require('./models/seller');
+const HeadTransaksi = require('./models/headTransaksi');
+const DetailTransaksi = require('./models/detailTransaksi');
 
 // app.use(bodyParser.urlencoded({
 //     extended: false
@@ -20,6 +22,7 @@ app.use(bodyParser.json());
 // Proses Routing
 const barang_route = require('./routes/barang');
 const seller_route = require('./routes/seller');
+const transaksi_route = require('./routes/transaksi');
 
 app.get('/', (req, res) => {
     res.json({
@@ -36,6 +39,9 @@ app.use(barang_route);
 
 // Menggunakan Route Seller
 app.use(seller_route);
+
+// Menggunakan Route Transaksi
+app.use(transaksi_route);
 
 app.listen(3000, () => {
     sequelize.sync();
