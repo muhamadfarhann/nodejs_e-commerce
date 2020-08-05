@@ -14,20 +14,26 @@ const sellerControler = require('../controllers/seller');
 router.get('/create', (req, res) => {
 
     // Memanggil View Create EJS
-    res.render('seller/create', {data: null});
+    res.render('seller/create', {
+        data: null
+    });
 
 });
 
 // Membuat URL Update
-router.get('/:id/update', async (req, res) => {
+router.get('/:id/update', async(req, res) => {
 
     // Menampilkan Data Seller Berdasarkan Primary Key (id)
     let seller = await Seller.findOne({
-        where: {id: req.params.id}
+        where: {
+            id: req.params.id
+        }
     });
 
     // Memanggil View Update EJS dengan Mengirimkan Data Seller
-    res.render('seller/update', {seller: seller});
+    res.render('seller/update', {
+        seller: seller
+    });
 });
 
 // Membuat URL Delete
@@ -36,7 +42,9 @@ router.get('/:id/delete', (req, res) => {
     // Perintah Untuk Menghapus Data Seller Berdasarkan Primary Key (id)
     Seller
         .destroy({
-          where: {id:req.params.id}
+            where: {
+                id: req.params.id
+            }
         })
         .then((seller) => {
             res.redirect('/seller/index');
@@ -85,7 +93,9 @@ router.post('/:id/update', (req, res) => {
     // Perintah Untuk Mengubah Data Seller Berdasarkan (id)
     Seller
         .update(data, {
-          where: {id:req.params.id}
+            where: {
+                id: req.params.id
+            }
         })
         .then((seller) => {
             res.redirect('/seller/index');
@@ -101,21 +111,24 @@ router.get('/index', (req, res) => {
 
     // Perintah Untuk Menampilkan Seluruh Data Seller
     Seller
-    .findAll()
-    .then((seller) => {
-        let data = seller;
-        res.render('seller/index', {data: data});
-    })
-    .catch((error) => {
-        console.log(error);
-    })
+        .findAll()
+        .then((seller) => {
+            let data = seller;
+            res.render('seller/index', {
+                data: data
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+        })
 
 });
 
 //update tanggal 5 agustus
-router.get('/api/v1/seller',sellerControler.getSeller);
-router.delete('/api/v1/seller/id/:id',sellerControler.deleteSeller);
-router.post('/api/v1/seller',sellerControler.createSeller)
-router.patch('/api/v1/seller',sellerControler.updateSeller)
+router.get('/api/v1/seller', sellerControler.getSeller);
+router.get('/api/v1/seller/id/:id', sellerControler.findByid);
+router.delete('/api/v1/seller/id/:id', sellerControler.deleteSeller);
+router.post('/api/v1/seller', sellerControler.createSeller)
+router.patch('/api/v1/seller', sellerControler.updateSeller)
 
 module.exports = router;
