@@ -7,8 +7,11 @@ const router = express.Router();
 // Menggunakan Model Seller
 const Seller = require('../models/seller');
 
+//mambuat constanta controller sales
+const sellerControler = require('../controllers/seller');
+
 // Membuat URL Create
-router.get('/create', (req, res) => { 
+router.get('/create', (req, res) => {
 
     // Memanggil View Create EJS
     res.render('seller/create', {data: null});
@@ -17,7 +20,7 @@ router.get('/create', (req, res) => {
 
 // Membuat URL Update
 router.get('/:id/update', async (req, res) => {
-    
+
     // Menampilkan Data Seller Berdasarkan Primary Key (id)
     let seller = await Seller.findOne({
         where: {id: req.params.id}
@@ -33,7 +36,7 @@ router.get('/:id/delete', (req, res) => {
     // Perintah Untuk Menghapus Data Seller Berdasarkan Primary Key (id)
     Seller
         .destroy({
-          where: {id:req.params.id}  
+          where: {id:req.params.id}
         })
         .then((seller) => {
             res.redirect('/seller/index');
@@ -82,7 +85,7 @@ router.post('/:id/update', (req, res) => {
     // Perintah Untuk Mengubah Data Seller Berdasarkan (id)
     Seller
         .update(data, {
-          where: {id:req.params.id}  
+          where: {id:req.params.id}
         })
         .then((seller) => {
             res.redirect('/seller/index');
@@ -108,5 +111,11 @@ router.get('/index', (req, res) => {
     })
 
 });
+
+//update tanggal 5 agustus
+router.get('/api/v1/seller',sellerControler.getSeller);
+router.delete('/api/v1/seller/id/:id',sellerControler.deleteSeller);
+router.post('/api/v1/seller',sellerControler.createSeller)
+router.patch('/api/v1/seller',sellerControler.updateSeller)
 
 module.exports = router;

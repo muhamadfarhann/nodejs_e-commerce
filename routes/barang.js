@@ -1,6 +1,9 @@
 // Mengimport Express
 const express = require('express');
 
+//membuat constanta dari controller barang
+const barangController = require('../controllers/barang');
+
 // Menggunakan Konfigurasi Router
 const router = express.Router();
 
@@ -12,7 +15,7 @@ const Seller = require('../models/seller');
 const Sequelize = require('sequelize');
 
 // Membuat URL Create
-router.get('/create', (req, res) => { 
+router.get('/create', (req, res) => {
 
     Seller
     .findAll()
@@ -22,12 +25,12 @@ router.get('/create', (req, res) => {
         res.render('barang/create', {seller: seller});
 
     })
-    
+
 });
 
 // Membuat URL Update
 router.get('/:id/update', async (req, res) => {
-    
+
     // Menampilkan Data Barang Berdasarkan Primary Key (id)
     let barang = await Barang.findByPk(
         // where: {id: req.params.id}
@@ -46,7 +49,7 @@ router.get('/:id/delete', (req, res) => {
     // Perintah Untuk Menghapus Data Barang Berdasarkan Primary Key (id)
     Barang
         .destroy({
-          where: {id:req.params.id}  
+          where: {id:req.params.id}
         })
         .then((barang) => {
             res.redirect('/barang/index');
@@ -73,7 +76,7 @@ router.post('/create', (req, res) => {
     Barang
         .findOrCreate({
             where: {kode_barang: req.body.kode_barang },
-            defaults:  data 
+            defaults:  data
         })
         .then((barang) => {
             res.redirect('index');
@@ -100,7 +103,7 @@ router.post('/:id/update', (req, res) => {
     // Perintah Untuk Mengubah Data Barang Berdasarkan (id)
     Barang
         .update(data, {
-          where: {id:req.params.id}  
+          where: {id:req.params.id}
         })
         .then((barang) => {
             res.redirect('/barang/index');
@@ -142,5 +145,14 @@ router.post('/search', async (req, res) => {
       return res.render('barang/index', {data: rows, count: count});
 
 });
+
+//update 5 agustus 2020
+router.get('/api/v1/barang', barangController.getAllBarang);
+router.get('/api/v1/barang/kode/:kode_barang', barangController.getBarangByKode);
+router.post('/api/v1/barang/create', barangController.createBarang);
+router.delete('/api/v1/barang/delete/:kode_barang', barangController.deleteBarang);
+router.patch('/api/v1/barang/update',barangController.updateBarang);
+
+
 
 module.exports = router;
