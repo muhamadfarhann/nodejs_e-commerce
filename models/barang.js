@@ -10,7 +10,7 @@ class Barang extends Sequelize.Model{}
 // Inisialisasi dan Pembuatan Tabel Barang
 Barang.init({
     kode_barang: {
-        type: Sequelize.STRING, 
+        type: Sequelize.STRING,
         unique: true
     },
     seller_id: Sequelize.STRING,
@@ -18,7 +18,7 @@ Barang.init({
     harga: Sequelize.INTEGER,
     stok: Sequelize.INTEGER,
     deskripsi: Sequelize.TEXT
-}, { 
+}, {
     sequelize, modelName: 'barang'
 });
 

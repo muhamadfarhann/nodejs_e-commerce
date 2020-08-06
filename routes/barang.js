@@ -149,6 +149,7 @@ router.post('/search', async (req, res) => {
 //update 5 agustus 2020
 router.get('/api/v1/barang', barangController.getAllBarang);
 router.get('/api/v1/barang/kode/:kode_barang', barangController.getBarangByKode);
+router.get('/api/v1/barang/idseller/:id_seller', barangController.getBarangBySeller);
 router.post('/api/v1/barang/create', barangController.createBarang);
 router.delete('/api/v1/barang/delete/:kode_barang', barangController.deleteBarang);
 router.patch('/api/v1/barang/update',barangController.updateBarang);

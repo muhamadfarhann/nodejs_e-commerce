@@ -1,5 +1,6 @@
 //membuat constanta class barang
 const Barang = require('../models/barang')
+const Seller = require('../models/seller')
 
 //fungsi untuk menampilkan data barang
 module.exports.getAllBarang = (req, res) => {
@@ -116,4 +117,35 @@ module.exports.updateBarang = (req,res) => {
   .catch((error) => {
     res.json({"status":500, "data" : barang, "pesan" : error.toString()});
   })
+}
+
+//fungsi menampilkan stok barang di saler
+module.exports.getBarangBySeller = async (req,res) => {
+
+  //mencari seller
+  var seller = await Seller.findOne(
+    {
+      where : {
+        id : req.params.id_seller
+      }
+    }
+  );
+
+  //menancari baranag yang dimiliki seller
+  Barang.findAll({
+    where : {
+      seller_id : seller.id
+    }
+  })
+  .then((barang) => {
+    var data = {
+      "seller" : seller,
+      "barang" : barang
+    }
+    res.json({"status":200, "data" : data, "pesan" : "Berhasil"});
+  })
+  .catch((error) => {
+    res.json({"status":500, "data" : {}, "pesan" : error.toString()});
+  })
+
 }
