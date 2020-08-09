@@ -44,28 +44,50 @@ module.exports.createBarang = (req,res) => {
       deskripsi: req.body.deskripsi,
   };
 
-  //buat atau update
-  Barang
-      .findOne({
-        where : {
-          kode_barang: req.body.kode_barang
+  // Cek Seller //
+  Seller
+    .findOne({
+      where : {
+        id: req.body.seller_id
+      }
+    })
+    .then((seller) => {
+        // Jika Belum Punya Toko Tidak Bisa Input //
+        if(seller == null) {
+          res.json({"status":500, "data" : {}, "pesan" : "Buat Toko Dulu"});
+        } else {
+          Barang
+            .findOne({
+              where : {
+                kode_barang: req.body.kode_barang
+              }
+            })
+            .then((barang) => {
+      
+              if(barang == null){
+                return Barang.create(data);
+              }else{
+                return barang.update(data);
+              }
+                //res.json({"status":200, "data" : barang, "pesan" : "berhasil"});
+            })
+            .then((data) => {
+              res.json({"status":200, "data" : data, "pesan" : "berhasil"});
+            })
+            .catch((error) => {
+                res.json({"status":500, "data" : {}, "pesan" : error.toString()});
+            })
         }
-      })
-      .then((barang) => {
-
-        if(barang == null){
-          return Barang.create(data);
-        }else{
-          return barang.update(data);
-        }
-          //res.json({"status":200, "data" : barang, "pesan" : "berhasil"});
-      })
-      .then((data) => {
-        res.json({"status":200, "data" : data, "pesan" : "berhasil"});
-      })
-      .catch((error) => {
-          res.json({"status":500, "data" : {}, "pesan" : error.toString()});
-      })
+    })
+    // Kurang Catch //
+    .catch((error) => {
+        res.json({
+            "status": 500,
+            "data": {},
+            "pesan": error.toString()
+        });
+    })
+    
 }
 
 //fungsi hapus barang
