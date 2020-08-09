@@ -130,6 +130,6 @@ router.get('/api/v1/seller/id/:id', sellerControler.getSellerById);
 router.get('/api/v1/seller/name/:name', sellerControler.getSellerByName);
 router.delete('/api/v1/seller/id/:id', sellerControler.deleteSeller);
 router.post('/api/v1/seller', sellerControler.createSeller)
-router.patch('/api/v1/seller', sellerControler.updateSeller)
+router.patch('/api/v1/seller/update', sellerControler.updateSeller)
 
 module.exports = router;

@@ -88,6 +88,7 @@ module.exports.deleteSeller = (req, res) => {
 module.exports.updateSeller = (req, res) => {
 
     let data = {
+        id: req.body.id,
         nama_seller: req.body.nama_seller,
         nama_toko: req.body.nama_toko,
         no_telp: req.body.no_telp,
@@ -148,23 +149,23 @@ module.exports.getSellerById = (req, res) => {
 }
 
 module.exports.getSellerByName = (req, res) => {
-  Seller.findOne({
-          where: {
-              nama_seller: req.params.name
-          }
-      })
-      .then((seller) => {
-          res.json({
-              "status": 200,
-              "data": seller,
-              "pesan": "Berhasil"
-          });
-      })
-      .catch((error) => {
-          res.json({
-              "status": 500,
-              "data": {},
-              "pesan": error.toString()
-          });
-      })
+    Seller.findOne({
+            where: {
+                nama_seller: req.params.name
+            }
+        })
+        .then((seller) => {
+            res.json({
+                "status": 200,
+                "data": seller,
+                "pesan": "Berhasil"
+            });
+        })
+        .catch((error) => {
+            res.json({
+                "status": 500,
+                "data": {},
+                "pesan": error.toString()
+            });
+        })
 }
